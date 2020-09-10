@@ -14,7 +14,7 @@ class TodoList extends Component {
     // state是组件的状态,负责存储组件的数据
     this.state = {
       inputValue: '',
-      list: []
+      list: ['学习英文','学习react']
     }
   };
   render() {
@@ -28,11 +28,14 @@ class TodoList extends Component {
             value={this.state.inputValue}
             onChange={this.handleInputChange.bind(this)}
           />
-          <button>提交</button>
+          <button onClick={this.handleBtnClick.bind(this)}>提交</button>
         </div>
         <ul>
-          <li>学英语</li>
-          <li>Learning React</li>
+          {
+            this.state.list.map((item,index)=>{
+              return <li key={index}>{item}</li>
+            })
+          }
         </ul>
       </Fragment>
     )
@@ -44,6 +47,13 @@ class TodoList extends Component {
     // 注意this的指向问题，bind(this)这里的bind将this的作用域指定到组件实例
     this.setState({
       inputValue: e.target.value
+    })
+  }
+  handleBtnClick() {
+    this.setState({
+      // ...es6展开运算符
+      list:[...this.state.list,this.state.inputValue],
+      inputValue:''
     })
   }
 }
