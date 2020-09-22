@@ -14,7 +14,7 @@ class TodoList extends Component {
     // state是组件的状态,负责存储组件的数据
     this.state = {
       inputValue: '',
-      list: ['学习英文','学习react','测试提交','哈哈']
+      list: ['学习英文','学习react','测试提交','哈哈','GG']
     }
   };
   render() {
