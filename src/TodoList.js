@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-22 17:41:33
  * @LastEditors: Hewie
- * @LastEditTime: 2020-10-10 18:00:56
+ * @LastEditTime: 2020-10-14 23:04:10
  * @FilePath: /react/react-todolist/src/TodoList.js
  */
 import React, { Component, Fragment } from 'react';// Fragment 占位符 组件必须只有一个根标签，h5标签作为根标签会被渲染出来，用占位符做根标签不会被渲染
@@ -20,7 +20,7 @@ class TodoList extends Component {
     // state是组件的状态,负责存储组件的数据
     this.state = {
       inputValue: '',
-      list: ['学习英文', '学习react', '测试提交']
+      list: []
     }
   };
   render() {
@@ -36,7 +36,9 @@ class TodoList extends Component {
               3、事件绑定的时候要通过bind(this)对函数作用域进行变更
           */}
           {/* className代替class */}
+          <label htmlFor="insertArea">输入内容</label>
           <input
+            id='insertArea'
             className='input'
             value={this.state.inputValue}
             onChange={this.handleInputChange.bind(this)}
@@ -52,9 +54,9 @@ class TodoList extends Component {
                   key={index}
                   // 传递参数放在this后面
                   onClick={this.handleItemDelete.bind(this, index)}
+                  // dangerouslySetInnerHTML={{__html: item}}  dangerouslySetInnerHTML表示不转义在页面上显示的内容，使用时标签内text应为空
                   dangerouslySetInnerHTML={{ __html: item }}
                 >
-                  {item}
                 </li>
               )
             })
