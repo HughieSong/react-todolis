@@ -1,11 +1,12 @@
 /*
  * @Date: 2020-09-22 17:41:33
  * @LastEditors: Hewie
- * @LastEditTime: 2020-10-14 23:04:10
+ * @LastEditTime: 2020-10-16 11:57:17
  * @FilePath: /react/react-todolist/src/TodoList.js
  */
 import React, { Component, Fragment } from 'react';// Fragment 占位符 组件必须只有一个根标签，h5标签作为根标签会被渲染出来，用占位符做根标签不会被渲染
-import './style.css'
+import './style.css';
+import TodoItem from './TodoItem';
 
 // function TodoList(){
 //   return (
@@ -50,14 +51,17 @@ class TodoList extends Component {
           {
             this.state.list.map((item, index) => {
               return (
-                <li
+                <div>
+                  <TodoItem />
+                  {/*<li
                   key={index}
                   // 传递参数放在this后面
                   onClick={this.handleItemDelete.bind(this, index)}
                   // dangerouslySetInnerHTML={{__html: item}}  dangerouslySetInnerHTML表示不转义在页面上显示的内容，使用时标签内text应为空
                   dangerouslySetInnerHTML={{ __html: item }}
                 >
-                </li>
+                </li>*/}
+                </div>
               )
             })
           }
