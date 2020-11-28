@@ -1,24 +1,13 @@
-/*
- * @Date: 2020-09-22 17:41:33
- * @LastEditors: Hewie
- * @LastEditTime: 2020-10-16 11:57:17
- * @FilePath: /react/react-todolist/src/TodoList.js
- */
 import React, { Component, Fragment } from 'react';// Fragment 占位符 组件必须只有一个根标签，h5标签作为根标签会被渲染出来，用占位符做根标签不会被渲染
 import './style.css';
 import TodoItem from './TodoItem';
 
-// function TodoList(){
-//   return (
-//     <div>dsdsd</div>
-//   )
-// }
-
-
 class TodoList extends Component {
+  // constructor()：构造方法。在js里面一个class一定有一个constructor()构造函数,使用组件的时候constructor()最优先被执行,constructor接收一个参数props
   constructor(props) {
+    // super()：继承。在class方法中，继承是使用 extends 关键字来实现的。子类 必须 在 constructor()调用 super()方法，否则新建实例时会报错。
     super(props);
-    // state是组件的状态,负责存储组件的数据
+    // this.state是组件的状态,负责存储组件的数据
     this.state = {
       inputValue: '',
       list: []
