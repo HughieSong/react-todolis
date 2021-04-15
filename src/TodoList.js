@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';// ! Fragment 占位符 组件必须只有一个根标签，h5标签作为根标签会被渲染出来，用占位符做根标签不会被渲染
 import TodoItem from './TodoItem';
-import Test from './Test';
+// import Test from './Test';
 import './style.css';
 
 class TodoList extends Component {
@@ -18,7 +18,14 @@ class TodoList extends Component {
     this.handleBtnClick = this.handleBtnClick.bind(this)
     this.handleItemDelete = this.handleItemDelete.bind(this)
   }
+
+  // 在组件即将被挂载之前，自动被执行
+  componentWillMount(){
+    console.log('componentWillMount')
+  }
+
   render() {
+    console.log('render')
     return (
       <Fragment>
         <div>
@@ -38,43 +45,67 @@ class TodoList extends Component {
             value={this.state.inputValue}
             // onChange={this.handleInputChange.bind(this)}
             onChange={this.handleInputChange}
+            ref={(input) => { this.input = input }}
           />
 
           <button onClick={this.handleBtnClick}>提交</button>
         </div>
-        <ul>
+        <ul ref={(ul)=>{this.ul=ul}}>
           {this.getTodoItem()}
         </ul>
-        <Test content={this.state.inputValue}/>
+        {/*<Test content={this.state.inputValue}/>*/}
+
       </Fragment>
     )
   }
 
+  // 在组件被挂载之后，自动被执行
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
+
+  // 组件被更新之前，会自动执行
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate')
+    return false;
+  }
+  // 组件被更新之前，他会自动执行，但是他在shouldComponentUpdate之后执行
+  // 如果shouldComponentUpdate返回true他才执行
+  // 如果返回false，这个函数就不会执行了
+  componentWillUpdate(){
+    console.log('componentWillUpdate')
+  }
+  // 组件更新完之后，他会被执行
+  componentDidUpdate(){
+    console.log('componentDidUpdate')
+  }
+  componentWillReceiveProps(){
+    console.log('componentWillReceiveProps')
+  }
   getTodoItem() {
     return this.state.list.map((item, index) => {
       return (
-        <div key={index}>
           <TodoItem
             // 通过属性既可以传值又可以传方法
+            key={item}
             content={item}
             index={index}
             deleteItem={this.handleItemDelete}
           />
-          {/*<li
-          key={index}
-          // 传递参数放在this后面
-          onClick={this.handleItemDelete.bind(this, index)}
-          // dangerouslySetInnerHTML={{__html: item}}  dangerouslySetInnerHTML表示不转义在页面上显示的内容，使用时标签内text应为空
-          dangerouslySetInnerHTML={{ __html: item }}
-        >
-        </li>*/}
-        </div>
+        //   <li
+        //   key={index}
+        //   // 传递参数放在this后面
+        //   onClick={this.handleItemDelete.bind(this, index)}
+        //   // dangerouslySetInnerHTML={{__html: item}}  dangerouslySetInnerHTML表示不转义在页面上显示的内容，使用时标签内text应为空
+        //   dangerouslySetInnerHTML={{ __html: item }}
+        // >
+        // </li>
       )
     })
   }
 
   handleInputChange(e) {
-    // console.log(e.target.value)
+    // console.log(e.target.value, this.input.value)
     // console.log(this)
     // ! 注意this的指向问题，bind(this)这里的bind将this的作用域指定到组件实例
     // this.setState({
@@ -95,7 +126,10 @@ class TodoList extends Component {
     this.setState((prevState) => ({
       list: [...prevState.list, prevState.inputValue],
       inputValue: ''
-    }));
+    }),()=>{
+      console.log(this.ul.querySelectorAll('div').length)
+    });
+
   }
   handleItemDelete(index) {
     // immutable

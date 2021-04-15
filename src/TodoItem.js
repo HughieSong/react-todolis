@@ -9,7 +9,9 @@ class TodoItem extends Component {
 
   render() {
     const { content, test } = this.props;
+    // JSX -> createElement -> 虚拟DOM（JS对象）-> 真实的DOM
     return <div onClick={this.handleClick}>{test}-{content}</div>
+    // return React.createElement('div', {}, React.createElement('span', {}, 'item'))
   }
 
   handleClick() {
@@ -21,7 +23,8 @@ class TodoItem extends Component {
 // 外部传来的参数进行类型校验
 TodoItem.propTypes = {
   test: PropTypes.string.isRequired,// ! isRequired表示必传
-  content: PropTypes.arrayOf(PropTypes.number, PropTypes.string),
+  // content: PropTypes.arrayOf(PropTypes.number, PropTypes.string),
+  content: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   deleteItem: PropTypes.func,
   index: PropTypes.number
 };
