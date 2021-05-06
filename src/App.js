@@ -1,24 +1,17 @@
-import React, { Component } from 'react';
-
-// import { Component } from 'react'
-// // 等价于
-// import React from 'react';
-// const Component = React.Component;
-
-// function App() {
-//   return (
-//     <div className="App">
-//       hello
-//     </div>
-//   );
-// }
-
+import React, { Component, Fragment } from 'react';
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      show: true
+    }
+  }
   render() {
     return (
-      <div className="App">
-        hello111
-      </div>
+      <Fragment>
+        <div>hello</div>
+        <button>toggle</button>
+      </Fragment>
     )
   }
 }
