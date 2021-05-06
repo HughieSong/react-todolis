@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';// ! Fragment 占位符 组件必须只有一个根标签，h5标签作为根标签会被渲染出来，用占位符做根标签不会被渲染
 import TodoItem from './TodoItem';
 // import Test from './Test';
+import axios from 'axios';
 import './style.css';
 
 class TodoList extends Component {
@@ -20,12 +21,12 @@ class TodoList extends Component {
   }
 
   // 在组件即将被挂载之前，自动被执行
-  componentWillMount(){
-    console.log('componentWillMount')
+  componentWillMount() {
+    // console.log('componentWillMount')
   }
 
   render() {
-    console.log('render')
+    // console.log('parent render')
     return (
       <Fragment>
         <div>
@@ -50,7 +51,7 @@ class TodoList extends Component {
 
           <button onClick={this.handleBtnClick}>提交</button>
         </div>
-        <ul ref={(ul)=>{this.ul=ul}}>
+        <ul ref={(ul) => { this.ul = ul }}>
           {this.getTodoItem()}
         </ul>
         {/*<Test content={this.state.inputValue}/>*/}
@@ -59,39 +60,55 @@ class TodoList extends Component {
     )
   }
 
-  // 在组件被挂载之后，自动被执行
+  // 在组件被挂载之后，自动被执行  ajax请求一般放componentDidMount里
   componentDidMount() {
-    console.log('componentDidMount')
+    // console.log('componentDidMount')
+    axios.get('/todolist.json')
+      .then((res) => {
+        console.log(res.data);
+        this.setState(()=>({
+          list: [...res.data]
+        }))
+        // this.setState(() => {
+        //   return {
+        //     list: [...res.data]
+        //   }
+        // })
+      })
+      .catch(() => { alert('error') })
   }
 
   // 组件被更新之前，会自动执行
   shouldComponentUpdate() {
-    console.log('shouldComponentUpdate')
-    return false;
+    // console.log('shouldComponentUpdate')
+    return true;
   }
   // 组件被更新之前，他会自动执行，但是他在shouldComponentUpdate之后执行
   // 如果shouldComponentUpdate返回true他才执行
   // 如果返回false，这个函数就不会执行了
-  componentWillUpdate(){
-    console.log('componentWillUpdate')
+  componentWillUpdate() {
+    // console.log('componentWillUpdate')
   }
   // 组件更新完之后，他会被执行
-  componentDidUpdate(){
-    console.log('componentDidUpdate')
+  componentDidUpdate() {
+    // console.log('componentDidUpdate')
   }
-  componentWillReceiveProps(){
-    console.log('componentWillReceiveProps')
+  // 一个组件要从父组件接收参数
+  // 如果这个组件第一次存在于父组件中，不会执行
+  // 如果这个组件之前已经存在于父组件中，才会执行
+  componentWillReceiveProps() {
+    // console.log('componentWillReceiveProps')
   }
   getTodoItem() {
     return this.state.list.map((item, index) => {
       return (
-          <TodoItem
-            // 通过属性既可以传值又可以传方法
-            key={item}
-            content={item}
-            index={index}
-            deleteItem={this.handleItemDelete}
-          />
+        <TodoItem
+          // 通过属性既可以传值又可以传方法
+          key={item}
+          content={item}
+          index={index}
+          deleteItem={this.handleItemDelete}
+        />
         //   <li
         //   key={index}
         //   // 传递参数放在this后面
@@ -126,7 +143,7 @@ class TodoList extends Component {
     this.setState((prevState) => ({
       list: [...prevState.list, prevState.inputValue],
       inputValue: ''
-    }),()=>{
+    }), () => {
       console.log(this.ul.querySelectorAll('div').length)
     });
 
