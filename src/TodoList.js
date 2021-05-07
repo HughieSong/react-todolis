@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Input, Button, List } from 'antd';
 import store from './store';
-
-// const data = [
-//   'Racing car sprays burning fuel into crowd.',
-//   'Japanese princess to wed commoner.',
-//   'Australian walks 100km after outback crash.',
-//   'Man charged over missing wedding girl.',
-//   'Los Angeles battles huge wildfires.',
-// ];
+import { CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './store/actionTypes';//拆分actionTypes便于排错
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
-    console.log(this.state);
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleStoreChange = this.handleStoreChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
+    // 订阅redux更新
     store.subscribe(this.handleStoreChange);
   }
   render() {
@@ -34,26 +28,37 @@ class TodoList extends Component {
           style={{ marginTop: '10px', width: '300px' }}
           bordered
           dataSource={this.state.list}
-          renderItem={item => <List.Item>{item}</List.Item>}
+          renderItem={(item, index) => <List.Item onClick={this.handleItemDelete.bind(this, index)}>{item}</List.Item>}
         />
       </div>
     )
   }
   handleInputChange(e) {
     const action = {
-      type: 'change_input_value',
+      // type: 'change_input_value',
+      type: CHANGE_INPUT_VALUE,
       value: e.target.value
     }
     store.dispatch(action);
   }
-  handleStoreChange(){
+  handleStoreChange() {
     console.log('store change')
     this.setState(store.getState())
   }
-  handleBtnClick(){
+  handleBtnClick() {
     const action = {
-      type:'add_todo_item'
+      // type: 'add_todo_item'
+      type: ADD_TODO_ITEM
     };
+    store.dispatch(action)
+  }
+  handleItemDelete(index) {
+    console.log(index)
+    const action = {
+      // type: 'delete_todo_item',
+      type: DELETE_TODO_ITEM,
+      index
+    }
     store.dispatch(action)
   }
 }
