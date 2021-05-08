@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Input, Button, List } from 'antd';
 
 // 当一个普通的组件（类）只有一个render函数的时候，可以用无状态组件（函数）替换普通组件
@@ -17,7 +17,7 @@ const TodoListUI = (props) => {
         style={{ marginTop: '10px', width: '300px' }}
         bordered
         dataSource={props.list}
-        renderItem={(item, index) => <List.Item onClick={(idnex) => { props.handleItemDelete(index) }}>{item}</List.Item>}
+        renderItem={(item, index) => <List.Item onClick={() => { props.handleItemDelete(index) }}>{item}</List.Item>}
       />
     </div>
     )
