@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import store from './store';
-import { getTodoList,getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreator';//使用actionCreator统一创建action
+import { getInitList, getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreator';//使用actionCreator统一创建action
 import TodoListUI from './TodoListUI';
+
 class TodoList extends Component {
   constructor(props) {
     super(props);
@@ -28,8 +29,7 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    const action = getTodoList();
-    // console.log(action)
+    const action = getInitList();
     store.dispatch(action);
   }
 
