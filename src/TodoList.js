@@ -13,7 +13,7 @@ class TodoList extends Component {
       <div>
         <div>
           <input value={this.props.inputValue} onChange={this.props.changeInputValue} />
-          <button onClick={ this.props.handleBtnClick}>提交</button>
+          <button onClick={this.props.handleBtnClick}>提交</button>
         </div>
         <ul>
           <li>test</li>
@@ -22,7 +22,7 @@ class TodoList extends Component {
     )
   }
 
-  handleBtnClick(){}
+  handleBtnClick() { }
 }
 
 // store里面的公用数据state映射到组件里的props
@@ -32,10 +32,10 @@ const mapStateToProps = (state) => {
   }
 }
 // store.dispatch方法挂载到props上
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
   return {
     changeInputValue(e) {
-      const action={
+      const action = {
         type: 'change_input_value',
         value: e.target.value
       }
