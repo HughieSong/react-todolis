@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// import { CHANGE_INPUT_VALUE, ADD_ITEM, DETELE_ITEM} from './store/actionType';
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction, initListAction } from './store/actionCreator';//使用actionCreator统一创建action
 
 // 抽离为无状态组件
 const TodoList = (props) => {
@@ -48,25 +50,28 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeInputValue(e) {
-      const action = {
-        type: 'change_input_value',
-        value: e.target.value
-      }
+      // const action = {
+      //   type: CHANGE_INPUT_VALUE,
+      //   value: e.target.value
+      // }
+      const action = getInputChangeAction(e.target.value)
       dispatch(action);
       console.log(e.target.value)
     },
     handleClick() {
-      const action = {
-        type: 'add_item'
-      }
+      // const action = {
+      //   type: ADD_ITEM
+      // }
+      const action = getAddItemAction()
       dispatch(action);
     },
     handleDelete(index) {
       console.log(index)
-      const action = {
-        type: 'delete_item',
-        index
-      }
+      // const action = {
+      //   type: DETELE_ITEM,
+      //   index
+      // }
+      const action=getDeleteItemAction(index)
       dispatch(action);
     }
   }
